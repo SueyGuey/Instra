@@ -1,13 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Login } from './screens/Login';
+import Navigator from './navigation/RootStack'
 
 export default function App() {
   return (
-    <Login/>
+    <Navigator/>
   );
 }
-
-const styles = StyleSheet.create({
-  
-});
