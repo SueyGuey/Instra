@@ -1,28 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
+import firebase from 'firebase';
 
-export function Registration({navigation}) {
-  //pops the page off the stack
-  const back = () => {
-    navigation.navigate('login');
+export class Registration extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      email: '',
+      password: '',
+      name: ''
+    }
+
+    this.onSignUp = this.onSignUp.bind(this);
   }
 
-  return (
-    <View style = {styles.SignUp}>
-      <TouchableOpacity style = {styles.back} onPress = {back}>
-        <AntDesign name="leftcircleo" size = {36} color = '#340188' />
-      </TouchableOpacity>
-      <View style = {styles.AccCreation}>
-        <Text style = {styles.loginText}>Create a new account</Text>
-        <TextInput style = {styles.loginInput} placeholder ={'Email'} keyboardType = {'email-address'}/>
-        <TextInput style = {styles.loginInput} placeholder ={'Password'} secureTextEntry/>
-        <TouchableOpacity style = {styles.loginSubmit}>
-          <Text style = {styles.submitText}>REGISTER</Text>
+  onSignUp(){
+    const{ email, password, name } = this.state;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((result) =>{
+        console.log(result);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }
+
+  //pops the page off the stack
+
+  render(){
+    return (
+      <View style = {styles.SignUp}>
+        <TouchableOpacity style = {styles.back}>
+          <AntDesign name="leftcircleo" size = {36} color = '#340188' />
         </TouchableOpacity>
+        <View style = {styles.AccCreation}>
+          <Text style = {styles.loginText}>Create a new account</Text>
+          <TextInput
+            style = {styles.loginInput}
+            placeholder ={'Username'}
+            onChangeText = {(name) => this.setState({name})}/>
+          <TextInput
+            style = {styles.loginInput}
+            placeholder ={'Email'}
+            keyboardType = {'email-address'}
+            onChangeText = {(email) => this.setState({email})}/>
+          <TextInput
+            style = {styles.loginInput}
+            placeholder ={'Password'}
+            secureTextEntry = {true}
+            onChangeText = {(password) => this.setState({password})}/>
+          <TouchableOpacity style = {styles.loginSubmit}  onPress = {() => this.onSignUp()}>
+            <Text style = {styles.submitText}>REGISTER</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -70,3 +105,5 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   },
 });
+
+export default Registration;

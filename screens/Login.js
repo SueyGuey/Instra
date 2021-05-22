@@ -1,35 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import firebase from 'firebase';
 
-export function Login({navigation}) {
-  const SignUp = () => {
-    navigation.navigate('registration');
+export class Login extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      email: '',
+      password: '',
+    }
+
+    this.onSignUp = this.onSignIn.bind(this);
   }
 
-  return (
-    <View style={styles.login}>
-      <Text style = {styles.loginText}>Sign in with your existing account</Text>
-      <Text style = {styles.error}>Wrong email or password</Text>
-      <TextInput style = {styles.loginInput} placeholder ={'Email'} keyboardType = {'email-address'}/>
-      <TextInput style = {styles.loginInput} placeholder ={'Password'} secureTextEntry/>
-      <TouchableOpacity style = {styles.loginSubmit}>
-        <Text style = {styles.submitText}>SIGN IN</Text>
-      </TouchableOpacity>
-  
-      <View style={styles.or}>
-        <View style={styles.line} />
-          <View>
-            <Text style={styles.orText}>OR</Text>
-          </View>
-        <View style={styles.line} />
+  onSignIn(){
+    const{ email, password } = this.state;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((result) =>{
+        console.log(result);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }
+
+  render(){
+    return (
+      <View style={styles.login}>
+        <Text style = {styles.loginText}>Sign in with your existing account</Text>
+        <TextInput
+          style = {styles.loginInput}
+          placeholder ={'Email'}
+          keyboardType = {'email-address'}
+          onChangeText = {(email) => this.setState({email})}/>
+        <TextInput
+          style = {styles.loginInput}
+          placeholder ={'Password'}
+          secureTextEntry = {true}
+          onChangeText = {(password) => this.setState({password})}/>
+        <TouchableOpacity style = {styles.loginSubmit} onPress = {() => this.onSignIn()}>
+          <Text style = {styles.submitText}>SIGN IN</Text>
+        </TouchableOpacity>
+    
+        <View style={styles.or}>
+          <View style={styles.line} />
+            <View>
+              <Text style={styles.orText}>OR</Text>
+            </View>
+          <View style={styles.line} />
+        </View>
+          
+        <Text style = {styles.loginText}>Don't already have an account?</Text>
+        <TouchableOpacity style = {styles.loginSubmit}>
+          <Text style = {styles.submitText}>SIGN UP</Text>
+        </TouchableOpacity>
       </View>
-        
-      <Text style = {styles.loginText}>Don't already have an account?</Text>
-      <TouchableOpacity style = {styles.loginSubmit} onPress = {SignUp}>
-        <Text style = {styles.submitText}>SIGN UP</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -85,3 +113,5 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
 });
+
+export default Login;
