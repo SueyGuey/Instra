@@ -27,13 +27,12 @@ export class Registration extends Component {
       })
   }
 
-  //pops the page off the stack
-
   render(){
+    const { navigation } = this.props;
     return (
       <View style = {styles.SignUp}>
         <TouchableOpacity style = {styles.back}>
-          <AntDesign name="leftcircleo" size = {36} color = '#340188' />
+          <AntDesign name="leftcircleo" size = {36} color = '#340188' onPress = {()=>{navigation.pop()}}/>
         </TouchableOpacity>
         <View style = {styles.AccCreation}>
           <Text style = {styles.loginText}>Create a new account</Text>

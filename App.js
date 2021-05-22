@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import firebase from 'firebase';
 import { AuthStackNav } from './navigation/AuthStack';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLR6n42OZsAHyg8taET7efKCT2nbx_v1o",
@@ -28,6 +28,13 @@ export class App extends Component{
     this.state = {
       loaded: false
     }
+  }
+
+  onSignOut(){
+    firebase.auth().signOut()
+      .catch((e) => {
+        console.log(e);
+      })
   }
 
   componentDidMount(){
@@ -72,6 +79,7 @@ export class App extends Component{
     return(
       <View style = {styles.loading}>
         <Text >we logged in!</Text>
+        <Button title = 'Sign out' onPress = {() => this.onSignOut()}/>
       </View>
     );
   }

@@ -26,6 +26,8 @@ export class Login extends Component {
   }
 
   render(){
+    const { navigation } = this.props;
+
     return (
       <View style={styles.login}>
         <Text style = {styles.loginText}>Sign in with your existing account</Text>
@@ -52,7 +54,7 @@ export class Login extends Component {
         </View>
           
         <Text style = {styles.loginText}>Don't already have an account?</Text>
-        <TouchableOpacity style = {styles.loginSubmit}>
+        <TouchableOpacity style = {styles.loginSubmit} onPress = {()=>{navigation.push('registration')}}>
           <Text style = {styles.submitText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>
