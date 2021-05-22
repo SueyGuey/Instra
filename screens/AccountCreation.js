@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native
 import { AntDesign } from '@expo/vector-icons'; 
 
 export function Registration({navigation}) {
+  //pops the page off the stack
   const back = () => {
-    navigation.goBack();
+    navigation.navigate('login');
   }
 
   return (

@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 export function Login({navigation}) {
-  const Submit = () => {
-    navigation.push('Registration');
+  const SignUp = () => {
+    navigation.navigate('registration');
   }
 
   return (
@@ -15,7 +15,7 @@ export function Login({navigation}) {
       <TouchableOpacity style = {styles.loginSubmit}>
         <Text style = {styles.submitText}>SIGN IN</Text>
       </TouchableOpacity>
-        
+  
       <View style={styles.or}>
         <View style={styles.line} />
           <View>
@@ -25,7 +25,7 @@ export function Login({navigation}) {
       </View>
         
       <Text style = {styles.loginText}>Don't already have an account?</Text>
-      <TouchableOpacity style = {styles.loginSubmit} onPress = {Submit}>
+      <TouchableOpacity style = {styles.loginSubmit} onPress = {SignUp}>
         <Text style = {styles.submitText}>SIGN UP</Text>
       </TouchableOpacity>
     </View>
