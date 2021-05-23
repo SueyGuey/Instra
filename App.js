@@ -15,7 +15,7 @@ const firebaseConfig = {
   measurementId: "G-QLT90LCCZF"
 };
 
-//makes sure we are running other firebase instances
+//makes sure we are not running other firebase instances
 if(firebase.apps.length === 0){
   firebase.initializeApp(firebaseConfig);
 }

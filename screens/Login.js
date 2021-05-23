@@ -9,31 +9,35 @@ export class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      fail: false
     }
 
     this.onSignUp = this.onSignIn.bind(this);
   }
 
   onSignIn(){
-    const{ email, password } = this.state;
+    const{ email, password, fail } = this.state;
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) =>{
-        console.log(result);
+        console.log(e);
       })
       .catch((e) => {
-        console.log(e);
+        this.setState({fail: true});
       })
   }
 
   render(){
     const { navigation } = this.props;
+    const { fail } = this.state;
 
     return (
       <View style={styles.login}>
         <Text style = {styles.loginText}>Sign in with your existing account</Text>
+        {fail ?( <Text style = {styles.error}>Incorrect email or password</Text>) : null}
         <TextInput
           style = {styles.loginInput}
           placeholder ={'Email'}
+          autoCapitalize="none"
           keyboardType = {'email-address'}
           onChangeText = {(email) => this.setState({email})}/>
         <TextInput
@@ -68,6 +72,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingTop: 160,
+  },
+  M: {
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   loginText: {
       fontSize: 22,
